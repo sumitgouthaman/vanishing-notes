@@ -17,6 +17,7 @@ Vanishing Notes is a simple frontend-only webapp built with Vite. The applicatio
 - **Framework**: React 18 with TypeScript and Vite
 - **Entry point**: `index.html` - Single HTML file with basic structure
 - **Build tool**: Vite - Handles bundling and development server
+- **PWA**: Vite PWA plugin with service worker for offline functionality
 - **Editor**: MDXEditor for rich markdown editing
 - **Markdown Processing**: Marked library for converting markdown to HTML in note snippets
 - **Layout**: Masonic for Pinterest-style masonry grid layout
@@ -40,6 +41,7 @@ Vanishing Notes is a simple frontend-only webapp built with Vite. The applicatio
 - **Modern Icons**: Clean Lucide React icons throughout the interface
 - **Responsive Design**: Mobile-optimized layout that keeps header elements inline
 - **Settings**: Configurable note expiration timing
+- **Progressive Web App**: Installable on devices with offline functionality via service worker
 - **No Backend**: Entirely client-side application using localStorage
 
 ## Code Structure
