@@ -18,17 +18,23 @@ Vanishing Notes is a simple frontend-only webapp built with Vite. The applicatio
 - **Entry point**: `index.html` - Single HTML file with basic structure
 - **Build tool**: Vite - Handles bundling and development server
 - **Editor**: MDXEditor for rich markdown editing
+- **Markdown Processing**: Marked library for converting markdown to HTML in note snippets
+- **Icons**: Lucide React for modern flat icons
 - **Storage**: Browser localStorage for data persistence
-- **Styling**: CSS with responsive design
+- **Styling**: CSS with responsive design and Material Design patterns (FAB)
 - **Output**: `dist/` directory contains the built static files
 - **Deployment**: Automated via GitHub Actions to GitHub Pages
 
 ## Key Features
 
 - **Vanishing Notes**: Notes automatically fade and delete after configurable time periods
+- **Visual Fade Effect**: Note cards fade from bright yellow to pale as they age
 - **Markdown Editor**: Rich text editing with MDXEditor supporting headings, lists, formatting
-- **Cards View**: Google Keep-style grid layout showing note previews
-- **Responsive Design**: Mobile-friendly layout with breakpoints
+- **Smart Snippets**: Note previews show formatted markdown content with proper HTML rendering
+- **Cards View**: Google Keep-style yellow post-it grid layout showing note previews
+- **Floating Action Button**: Material Design FAB for creating new notes
+- **Modern Icons**: Clean Lucide React icons throughout the interface
+- **Responsive Design**: Mobile-optimized layout that keeps header elements inline
 - **Settings**: Configurable note expiration timing
 - **No Backend**: Entirely client-side application using localStorage
 
