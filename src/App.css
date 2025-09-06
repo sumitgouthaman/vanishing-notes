@@ -462,6 +462,18 @@ body {
 }
 
 /* Responsive Design */
+@media (max-width: 1200px) {
+  .editor-actions {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 900px) and (min-width: 481px) {
+  .editor-actions {
+    justify-content: center !important;
+  }
+}
+
 @media (max-width: 768px) {
   .home-screen {
     padding: 15px;
@@ -530,7 +542,8 @@ body {
   }
   
   .editor-actions {
-    flex-direction: column;
+    justify-content: center !important;
+    flex-direction: row;
   }
   
   .editor-actions button {
