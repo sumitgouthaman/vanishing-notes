@@ -111,16 +111,12 @@ body {
   transform: translateY(0);
 }
 
-/* Notes Grid */
-.notes-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
+/* Notes Container */
+.notes-container {
   padding: 20px 0 100px 0;
 }
 
 .empty-state {
-  grid-column: 1 / -1;
   text-align: center;
   padding: 60px 20px;
   color: #7f8c8d;

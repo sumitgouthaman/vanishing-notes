@@ -1,5 +1,6 @@
 import React from 'react';
 import { Settings, Plus } from 'lucide-react';
+import { Masonry } from 'masonic';
 import { Note, AppSettings } from '../types/Note';
 import { calculateFadeLevel, formatLastAccessed, getSnippet, confirmDeleteNote } from '../utils/storage';
 
@@ -20,6 +21,51 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
   onOpenSettings,
   onDeleteNote,
 }) => {
+  
+  const MasonryNoteCard: React.FC<{
+    index: number;
+    data: Note;
+    width: number;
+  }> = ({ data: note, width }) => {
+    const fadeLevel = calculateFadeLevel(note, settings);
+    const yellowIntensity = 1 - fadeLevel;
+    const backgroundColor = `rgb(${255}, ${241 + (255 - 241) * (1 - yellowIntensity)}, ${118 + (255 - 118) * (1 - yellowIntensity)})`;
+    
+    return (
+      <div
+        className="note-card"
+        style={{ 
+          width,
+          opacity: 1 - fadeLevel * 0.7,
+          backgroundColor: backgroundColor
+        }}
+        onClick={() => onEditNote(note)}
+      >
+        <div className="note-card-header">
+          <h3 className="note-title">
+            {note.title || 'Untitled'}
+          </h3>
+          <button
+            className="delete-btn"
+            onClick={(e) => {
+              e.stopPropagation();
+              if (confirmDeleteNote()) {
+                onDeleteNote(note.id);
+              }
+            }}
+          >
+            ×
+          </button>
+        </div>
+        <div className="note-snippet" dangerouslySetInnerHTML={{ __html: getSnippet(note.body) }} />
+        <div className="note-metadata">
+          <span className="last-accessed">
+            {formatLastAccessed(note.lastAccessed)}
+          </span>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="home-screen">
@@ -32,51 +78,19 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
         </div>
       </header>
 
-      <main className="notes-grid">
+      <main className="notes-container">
         {notes.length === 0 ? (
           <div className="empty-state">
             <p>No notes yet. Create your first note!</p>
           </div>
         ) : (
-          notes.map((note) => {
-            const fadeLevel = calculateFadeLevel(note, settings);
-            const yellowIntensity = 1 - fadeLevel;
-            const backgroundColor = `rgb(${255}, ${241 + (255 - 241) * (1 - yellowIntensity)}, ${118 + (255 - 118) * (1 - yellowIntensity)})`;
-            return (
-              <div
-                key={note.id}
-                className="note-card"
-                style={{ 
-                  opacity: 1 - fadeLevel * 0.7,
-                  backgroundColor: backgroundColor
-                }}
-                onClick={() => onEditNote(note)}
-              >
-                <div className="note-card-header">
-                  <h3 className="note-title">
-                    {note.title || 'Untitled'}
-                  </h3>
-                  <button
-                    className="delete-btn"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      if (confirmDeleteNote()) {
-                        onDeleteNote(note.id);
-                      }
-                    }}
-                  >
-                    ×
-                  </button>
-                </div>
-                <div className="note-snippet" dangerouslySetInnerHTML={{ __html: getSnippet(note.body) }} />
-                <div className="note-metadata">
-                  <span className="last-accessed">
-                    {formatLastAccessed(note.lastAccessed)}
-                  </span>
-                </div>
-              </div>
-            );
-          })
+          <Masonry
+            items={notes}
+            columnGutter={20}
+            columnWidth={300}
+            overscanBy={5}
+            render={MasonryNoteCard}
+          />
         )}
       </main>
       
