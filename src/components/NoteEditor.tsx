@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Save, X, SaveAll, Trash2 } from 'lucide-react';
+import { Save, X, Check, Trash2 } from 'lucide-react';
 import { MDXEditor, headingsPlugin, listsPlugin, markdownShortcutPlugin, quotePlugin, thematicBreakPlugin, toolbarPlugin, UndoRedo, BoldItalicUnderlineToggles, InsertThematicBreak, BlockTypeSelect, CreateLink, InsertAdmonition, ListsToggle } from '@mdxeditor/editor';
 import '@mdxeditor/editor/style.css';
 import { Note } from '../types/Note';
@@ -84,6 +84,9 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({
           className="title-input"
         />
         <div className="editor-actions">
+          <button onClick={handleDelete} className="delete-btn" title="Delete">
+            <Trash2 size={18} />
+          </button>
           <button onClick={handleSave} disabled={!hasUnsavedChanges} title="Save">
             <Save size={18} />
           </button>
@@ -91,10 +94,7 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({
             <X size={18} />
           </button>
           <button onClick={handleSaveAndClose} disabled={!hasUnsavedChanges} title="Save & Close">
-            <SaveAll size={18} />
-          </button>
-          <button onClick={handleDelete} className="delete-btn" title="Delete">
-            <Trash2 size={18} />
+            <Check size={18} />
           </button>
         </div>
       </header>
