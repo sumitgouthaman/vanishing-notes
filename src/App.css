@@ -93,13 +93,13 @@ body {
 }
 
 .note-card {
-  background: white;
+  background: #fff3b8;
   border-radius: 12px;
   padding: 20px;
   cursor: pointer;
   transition: all 0.2s ease;
-  border: 1px solid #e1e8ed;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #f0d86b;
+  box-shadow: 0 3px 6px rgba(240, 216, 107, 0.3), 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 .note-card:hover {

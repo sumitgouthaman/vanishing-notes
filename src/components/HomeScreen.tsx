@@ -42,11 +42,16 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
         ) : (
           notes.map((note) => {
             const fadeLevel = calculateFadeLevel(note, settings);
+            const yellowIntensity = 1 - fadeLevel;
+            const backgroundColor = `rgb(${255}, ${243 + (255 - 243) * (1 - yellowIntensity)}, ${184 + (255 - 184) * (1 - yellowIntensity)})`;
             return (
               <div
                 key={note.id}
                 className="note-card"
-                style={{ opacity: 1 - fadeLevel * 0.7 }}
+                style={{ 
+                  opacity: 1 - fadeLevel * 0.7,
+                  backgroundColor: backgroundColor
+                }}
                 onClick={() => onEditNote(note)}
               >
                 <div className="note-card-header">
