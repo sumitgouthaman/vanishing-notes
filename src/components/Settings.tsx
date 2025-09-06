@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { X, Save, XCircle } from 'lucide-react';
 import { AppSettings } from '../types/Note';
 
 interface SettingsProps {
@@ -23,8 +24,8 @@ export const Settings: React.FC<SettingsProps> = ({
     <div className="settings">
       <header className="settings-header">
         <h1>Settings</h1>
-        <button onClick={onClose} className="close-btn">
-          ×
+        <button onClick={onClose} className="close-btn" title="Close">
+          <X size={20} />
         </button>
       </header>
 
@@ -51,11 +52,11 @@ export const Settings: React.FC<SettingsProps> = ({
         </div>
 
         <div className="settings-actions">
-          <button onClick={handleSave} className="save-btn">
-            Save Settings
+          <button onClick={handleSave} className="save-btn" title="Save Settings">
+            <Save size={18} />
           </button>
-          <button onClick={onClose} className="cancel-btn">
-            Cancel
+          <button onClick={onClose} className="cancel-btn" title="Cancel">
+            <XCircle size={18} />
           </button>
         </div>
       </div>
