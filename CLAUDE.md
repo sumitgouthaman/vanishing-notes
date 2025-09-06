@@ -14,10 +14,40 @@ Vanishing Notes is a simple frontend-only webapp built with Vite. The applicatio
 
 ## Architecture
 
+- **Framework**: React 18 with TypeScript and Vite
 - **Entry point**: `index.html` - Single HTML file with basic structure
 - **Build tool**: Vite - Handles bundling and development server
+- **Editor**: MDXEditor for rich markdown editing
+- **Storage**: Browser localStorage for data persistence
+- **Styling**: CSS with responsive design
 - **Output**: `dist/` directory contains the built static files
 - **Deployment**: Automated via GitHub Actions to GitHub Pages
+
+## Key Features
+
+- **Vanishing Notes**: Notes automatically fade and delete after configurable time periods
+- **Markdown Editor**: Rich text editing with MDXEditor supporting headings, lists, formatting
+- **Cards View**: Google Keep-style grid layout showing note previews
+- **Responsive Design**: Mobile-friendly layout with breakpoints
+- **Settings**: Configurable note expiration timing
+- **No Backend**: Entirely client-side application using localStorage
+
+## Code Structure
+
+```
+src/
+├── components/           # React components
+│   ├── HomeScreen.tsx   # Main notes grid view
+│   ├── NoteEditor.tsx   # MDXEditor integration
+│   └── Settings.tsx     # App configuration
+├── hooks/
+│   └── useNotes.ts      # Notes management hook
+├── types/
+│   └── Note.ts          # TypeScript interfaces
+├── utils/
+│   └── storage.ts       # localStorage utilities and helpers
+└── App.tsx              # Main app router
+```
 
 ## Deployment
 
