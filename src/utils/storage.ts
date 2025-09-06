@@ -1,4 +1,5 @@
 import { Note, AppSettings } from '../types/Note';
+import { marked } from 'marked';
 
 const NOTES_KEY = 'vanishing-notes';
 const SETTINGS_KEY = 'vanishing-notes-settings';
@@ -74,8 +75,52 @@ export const formatLastAccessed = (timestamp: number): string => {
   return `${days}d ago`;
 };
 
-export const getSnippet = (body: string, maxLength: number = 100): string => {
-  return body.slice(0, maxLength).replace(/\n/g, ' ') + (body.length > maxLength ? '...' : '');
+export const getSnippet = (body: string, maxLines: number = 3): string => {
+  if (!body.trim()) return '';
+  
+  try {
+    // Convert markdown to HTML
+    const html = marked.parse(body);
+    
+    // Keep basic formatting tags but remove others
+    const formattedText = html
+      // Remove dangerous/unwanted tags but keep formatting
+      .replace(/<script[^>]*>.*?<\/script>/gi, '')
+      .replace(/<style[^>]*>.*?<\/style>/gi, '')
+      .replace(/<iframe[^>]*>.*?<\/iframe>/gi, '')
+      // Remove block-level container tags but keep their content
+      .replace(/<\/?div[^>]*>/gi, '')
+      .replace(/<\/?section[^>]*>/gi, '')
+      .replace(/<\/?article[^>]*>/gi, '')
+      // Keep basic formatting: headings, strong, em, lists, code
+      // Remove paragraph tags since we handle line breaks differently
+      .replace(/<\/?p[^>]*>/gi, '\n')
+      // Convert br tags to newlines
+      .replace(/<br[^>]*>/gi, '\n')
+      // Clean up multiple newlines
+      .replace(/\n{3,}/g, '\n\n')
+      // Decode HTML entities
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&amp;/g, '&')
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g, "'")
+      .trim();
+    
+    // Split by actual line breaks and filter empty lines
+    const lines = formattedText.split('\n').filter(line => line.trim());
+    const previewLines = lines.slice(0, maxLines);
+    
+    // If we truncated, add ellipsis
+    const hasMore = lines.length > maxLines;
+    const result = previewLines.join('\n');
+    
+    return result + (hasMore ? '...' : '');
+  } catch (error) {
+    // Fallback to simple truncation if marked fails
+    const lines = body.split('\n').slice(0, maxLines);
+    return lines.join('\n') + (body.split('\n').length > maxLines ? '...' : '');
+  }
 };
 
 export const confirmDeleteNote = (): boolean => {

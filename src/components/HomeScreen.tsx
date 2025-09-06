@@ -1,4 +1,5 @@
 import React from 'react';
+import { Settings, Plus } from 'lucide-react';
 import { Note, AppSettings } from '../types/Note';
 import { calculateFadeLevel, formatLastAccessed, getSnippet, confirmDeleteNote } from '../utils/storage';
 
@@ -25,11 +26,8 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
       <header className="home-header">
         <h1>Vanishing Notes</h1>
         <div className="header-actions">
-          <button className="new-note-btn" onClick={onCreateNote}>
-            + New Note
-          </button>
           <button className="settings-btn" onClick={onOpenSettings}>
-            ⚙️
+            <Settings size={20} />
           </button>
         </div>
       </header>
@@ -43,7 +41,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
           notes.map((note) => {
             const fadeLevel = calculateFadeLevel(note, settings);
             const yellowIntensity = 1 - fadeLevel;
-            const backgroundColor = `rgb(${255}, ${243 + (255 - 243) * (1 - yellowIntensity)}, ${184 + (255 - 184) * (1 - yellowIntensity)})`;
+            const backgroundColor = `rgb(${255}, ${241 + (255 - 241) * (1 - yellowIntensity)}, ${118 + (255 - 118) * (1 - yellowIntensity)})`;
             return (
               <div
                 key={note.id}
@@ -70,7 +68,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                     ×
                   </button>
                 </div>
-                <p className="note-snippet">{getSnippet(note.body)}</p>
+                <div className="note-snippet" dangerouslySetInnerHTML={{ __html: getSnippet(note.body) }} />
                 <div className="note-metadata">
                   <span className="last-accessed">
                     {formatLastAccessed(note.lastAccessed)}
@@ -81,6 +79,10 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
           })
         )}
       </main>
+      
+      <button className="fab" onClick={onCreateNote}>
+        <Plus size={24} />
+      </button>
     </div>
   );
 };
