@@ -3,6 +3,7 @@ export interface Note {
   title: string;
   body: string;
   lastAccessed: number;
+  lastEdited: number;
   created: number;
 }
 

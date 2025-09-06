@@ -22,6 +22,7 @@ export const useNotes = () => {
       title: '',
       body: '',
       lastAccessed: now,
+      lastEdited: now,
       created: now,
     };
     
@@ -35,7 +36,7 @@ export const useNotes = () => {
     const now = Date.now();
     const updatedNotes = notes.map(note =>
       note.id === id
-        ? { ...note, ...updates, lastAccessed: now }
+        ? { ...note, ...updates, lastAccessed: now, lastEdited: now }
         : note
     );
     
@@ -44,7 +45,15 @@ export const useNotes = () => {
   };
 
   const accessNote = (id: string) => {
-    updateNote(id, {});
+    const now = Date.now();
+    const updatedNotes = notes.map(note =>
+      note.id === id
+        ? { ...note, lastAccessed: now }
+        : note
+    );
+    
+    setNotes(updatedNotes);
+    saveNotes(updatedNotes);
   };
 
   const deleteNote = (id: string) => {

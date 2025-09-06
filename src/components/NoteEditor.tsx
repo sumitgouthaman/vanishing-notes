@@ -3,7 +3,7 @@ import { Save, X, Check, Trash2 } from 'lucide-react';
 import { MDXEditor, headingsPlugin, listsPlugin, markdownShortcutPlugin, quotePlugin, thematicBreakPlugin, toolbarPlugin, UndoRedo, BoldItalicUnderlineToggles, InsertThematicBreak, BlockTypeSelect, CreateLink, InsertAdmonition, ListsToggle } from '@mdxeditor/editor';
 import '@mdxeditor/editor/style.css';
 import { Note } from '../types/Note';
-import { confirmDeleteNote } from '../utils/storage';
+import { confirmDeleteNote, formatLastAccessed } from '../utils/storage';
 
 interface NoteEditorProps {
   note: Note;
@@ -76,13 +76,18 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({
   return (
     <div className="note-editor">
       <header className="editor-header">
-        <input
-          type="text"
-          placeholder="Note title..."
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          className="title-input"
-        />
+        <div className="editor-title-section">
+          <input
+            type="text"
+            placeholder="Note title..."
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className="title-input"
+          />
+          <div className="editor-timestamps">
+            Last edited {formatLastAccessed(note.lastEdited)}
+          </div>
+        </div>
         <div className="editor-actions">
           <button onClick={handleDelete} className="delete-btn" title="Delete">
             <Trash2 size={18} />

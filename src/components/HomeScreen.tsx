@@ -59,7 +59,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
         </div>
         <div className="note-snippet" dangerouslySetInnerHTML={{ __html: getSnippet(note.body) }} />
         <div className="note-metadata">
-          <span className="last-accessed">
+          <span className="note-timestamps">
             {formatLastAccessed(note.lastAccessed)}
           </span>
         </div>

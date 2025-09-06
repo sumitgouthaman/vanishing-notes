@@ -17,7 +17,12 @@ export const loadNotes = (): Note[] => {
   if (!stored) return [];
   
   try {
-    return JSON.parse(stored);
+    const notes = JSON.parse(stored);
+    // Migrate old notes to include lastEdited field
+    return notes.map((note: any) => ({
+      ...note,
+      lastEdited: note.lastEdited || note.lastAccessed || note.created
+    }));
   } catch {
     return [];
   }
@@ -73,6 +78,28 @@ export const formatLastAccessed = (timestamp: number): string => {
   if (minutes < 60) return `${minutes}m ago`;
   if (hours < 24) return `${hours}h ago`;
   return `${days}d ago`;
+};
+
+export const formatNoteTimestamps = (lastAccessed: number, lastEdited: number): string => {
+  // Handle missing timestamps
+  if (!lastAccessed && !lastEdited) return '';
+  if (!lastAccessed) return `Edited ${formatLastAccessed(lastEdited)}`;
+  if (!lastEdited) return `Accessed ${formatLastAccessed(lastAccessed)}`;
+  
+  const accessedStr = formatLastAccessed(lastAccessed);
+  const editedStr = formatLastAccessed(lastEdited);
+  
+  // If accessed and edited are very close (within 5 minutes), show only one
+  const timeDiff = Math.abs(lastAccessed - lastEdited);
+  const fiveMinutes = 5 * 60 * 1000;
+  
+  if (timeDiff < fiveMinutes) {
+    // Show the more recent one, or "accessed" if they're essentially the same
+    return lastAccessed >= lastEdited ? `Accessed ${accessedStr}` : `Edited ${editedStr}`;
+  }
+  
+  // Show both if they're different
+  return `Accessed ${accessedStr} • Edited ${editedStr}`;
 };
 
 export const getSnippet = (body: string, maxLines: number = 3): string => {

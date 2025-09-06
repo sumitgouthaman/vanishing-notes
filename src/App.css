@@ -224,7 +224,7 @@ body {
   padding-top: 10px;
 }
 
-.last-accessed {
+.note-timestamps {
   color: #666666;
   font-size: 0.85rem;
 }
@@ -242,20 +242,30 @@ body {
   border-bottom: 1px solid #e1e8ed;
   background: #fafafa;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 20px;
   flex-wrap: wrap;
 }
 
-.title-input {
+.editor-title-section {
   flex: 1;
+  min-width: 200px;
+}
+
+.title-input {
+  width: 100%;
   font-size: 1.5rem;
   font-weight: 600;
   border: none;
   outline: none;
   background: transparent;
   padding: 8px 0;
-  min-width: 200px;
+}
+
+.editor-timestamps {
+  color: #666666;
+  font-size: 0.85rem;
+  margin-top: 4px;
 }
 
 .title-input::placeholder {
@@ -508,7 +518,7 @@ body {
     gap: 15px;
   }
   
-  .title-input {
+  .editor-title-section {
     min-width: unset;
   }
   
